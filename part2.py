@@ -41,7 +41,7 @@ print(resultSum / rddReducedByMinute.count())
 
 # Write the throughput for exsiting minutes to csv file. Note: the
 # minutes which does not contains any entries are not inlcuded
-# with open("out.csv", "wb") as csv_file:
-#     writer = csv.writer(csv_file, delimiter=',')
-#     for line in rddReqMinute.collect():
-#         writer.writerow(line)
+with open("client_stats.csv", "wb") as csv_file:
+    writer = csv.writer(csv_file, delimiter=',')
+    for line in rddReducedByMinute.collect():
+        writer.writerow(line)

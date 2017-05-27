@@ -43,7 +43,7 @@ print(result / diff)
 
 # Write the throughput for exsiting minutes to csv file. Note: the
 # minutes which does not contains any entries are not inlcuded
-with open("out.csv", "wb") as csv_file:
+with open("server_stats.csv", "wb") as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
     for line in rddDistinctMin.collect():
         writer.writerow(line)
