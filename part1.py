@@ -21,7 +21,7 @@ rddSend = rdd.filter(lambda w: w.startswith("res_snd,"))
 # distinct values and calculate the occurence inside a minute,
 # we define a tumple with value 1 to sum up the values later
 def minutef(x):
-    return (str(int(x.split(",")[6]) / 1000 * 60), 1)
+    return (str(int(x.split(",")[6]) / (1000 * 60)), 1)
 
 
 # Execute the mapping function and reduce by key. The latter will
@@ -39,7 +39,7 @@ minTime = int(rddDistinctMin.min()[0])
 maxTime = int(rddDistinctMin.max()[0])
 
 diff = maxTime - minTime
-print(result / diff)
+print(result / rddDistinctMin.count())
 
 # Write the throughput for exsiting minutes to csv file. Note: the
 # minutes which does not contains any entries are not inlcuded

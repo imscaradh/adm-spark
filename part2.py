@@ -25,7 +25,7 @@ def mapf(x):
 # Map the function above and reduce by combined key to get the diff
 # between two corresponding request and response entries
 rddReqResp = rdd.map(mapf)
-rddReqRespTimeDiff = rddReqResp.reduceByKey(lambda x, y: (x[0] / 1000 * 60, y[1] - x[1]))
+rddReqRespTimeDiff = rddReqResp.reduceByKey(lambda x, y: (x[0] / (1000 * 60), y[1] - x[1]))
 
 # Remove key from rdd and calculate the sum of the requests within one minute
 rddReqRespMapped = rddReqRespTimeDiff.map(lambda x: x[1])
@@ -36,7 +36,8 @@ rddReducedByMinute = rddReqRespMapped.reduceByKey(operator.add)
 resultSum = rddReducedByMinute.map(lambda x: x[1]).reduce(operator.add) 
 
 # Calcuate the average response time for requests inside a minute
-#minutes = rddReducedByMinute.max()[0] - rddReducedByMinute.min()[0]
+diff = rddReducedByMinute.max()[0] - rddReducedByMinute.min()[0]
+
 print(resultSum / rddReducedByMinute.count())
 
 # Write the throughput for exsiting minutes to csv file. Note: the
